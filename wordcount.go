@@ -1,32 +1,22 @@
 package main
 
 import (
-	"bufio"
+	"errors"
 	"fmt"
-	"io"
 	"log"
 	"os"
 	"strings"
 )
 
 func main() {
-	sentence, err := readString()
+	args := os.Args
 
-	if err != nil {
-		log.Fatal(err)
+	if len(args) != 2 {
+		log.Fatal(errors.New("need exactly 1 command-line argument"))
 	}
 
-	words := strings.Fields(sentence)
+	words := strings.Fields(args[1])
 	wordsCount := len(words)
 
 	fmt.Println(wordsCount)
-}
-
-func readString() (string, error) {
-	reader := bufio.NewReader(os.Stdin)
-	input, err := reader.ReadString('\n')
-	if err != nil && err != io.EOF {
-		return "", err
-	}
-	return input, nil
 }
